@@ -15,9 +15,16 @@ function* rootSaga() {
 
 }
 
+//--------SAGAS-------------
+// ******put sagas here******
+//--------END SAGAS---------
+
+
 // Create sagaMiddleware
 const sagaMiddleware = createSagaMiddleware();
 
+
+//--------REDUCERS----------
 // Used to store movies returned from the server
 const movies = (state = [], action) => {
     switch (action.type) {
@@ -27,7 +34,6 @@ const movies = (state = [], action) => {
             return state;
     }
 }
-
 // Used to store the movie genres
 const genres = (state = [], action) => {
     switch (action.type) {
@@ -37,6 +43,8 @@ const genres = (state = [], action) => {
             return state;
     }
 }
+//--------END REDUCERS---------
+
 
 // Create one store that all components can use
 const storeInstance = createStore(
