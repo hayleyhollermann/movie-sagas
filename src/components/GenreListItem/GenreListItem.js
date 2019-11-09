@@ -17,29 +17,36 @@ class GenreListItem extends Component {
 
   dropdownGenres = () => {
     this.setState({
+        ...this.state,
         edit:{genres: !this.state.edit.genres}
     })
   }
 
-  setNewGenre = () => {
-      console.log('in setNewGenre');
-      
+  setNewGenre = (event) => {
+    console.log('in setNewGenre');
+    this.setState({
+        ...this.state,
+        newId: event.data
+    })
+    console.log('new genre id =', this.state.newId);
+    
   }
 
   render() {
     return (
       <div>
         {!this.state.edit.genres ? 
-          (<li key={this.props.genre.name}>{this.props.genre.name}, id:{this.props.genre.id}
+          (<li key={this.props.genre.id}>{this.props.genre.name}, id:{this.props.genre.id}
             <button onClick={this.dropdownGenres}>Edit</button>
             <button>Delete</button>
           </li>) : 
-          <select>
+          <select onChange={this.setNewGenre}>
             {this.props.reduxState.genres.map((genreItem) => 
-              <option key={genreItem.id} onClick={() => this.setNewGenre(genreItem.id)}>{genreItem.name}</option>
+              <option data={genreItem.id} key={genreItem.id}>{genreItem.name} : {genreItem.id}</option>
             )}
           </select>
         }
+        <pre>{JSON.stringify(this.props.reduxState.genres)}</pre>
       </div>
     );
   }

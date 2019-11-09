@@ -4,10 +4,8 @@ import './index.css';
 import App from './components/App/App.js';
 import registerServiceWorker from './registerServiceWorker';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-// Provider allows us to use redux within our react app
 import { Provider } from 'react-redux';
 import logger from 'redux-logger';
-// Import saga middleware
 import createSagaMiddleware from 'redux-saga';
 import { takeEvery, put } from 'redux-saga/effects'; 
 import axios from 'axios';
@@ -23,6 +21,7 @@ function* rootSaga() {
 }
 
 //--------SAGAS-------------
+// gets all movies from server
 function* getMoviesSaga() {
     try {
         const moviesResponse = yield axios.get('/movies');
@@ -31,6 +30,7 @@ function* getMoviesSaga() {
         console.log('error fetching movies list', error)
     }    
 }
+// gets info of selected movie
 function* seeInfoSaga(action) {
     try {
         const moviesResponse = yield axios.get(`/movies/details/${action.payload}`);
@@ -39,6 +39,7 @@ function* seeInfoSaga(action) {
         console.log('error fetching movies list', error)
     }
 }
+// gets all genres of selected movie
 function* getGenresSaga(action) {
     try {
         const moviesResponse = yield axios.get(`/movies/genres/${action.payload}`);
@@ -47,6 +48,7 @@ function* getGenresSaga(action) {
         console.log('error fetching movie genres list', error)
     }
 }
+// gets all genres
 function* allGenresSaga() {
     try {
         const moviesResponse = yield axios.get('/movies/genres');
@@ -56,9 +58,9 @@ function* allGenresSaga() {
         console.log('error fetching genres list', error)
     } 
 }
+// sends new description to server 
 function* editDescriptionSaga(action) {
     console.log('in editDescriptionSaga', action.payload.description);
-    
     try {
         yield axios.put(`/movies/details/${action.payload.id}`, action.payload);
         yield put({type: 'SEE_INFO', payload: action.payload.id});
@@ -74,13 +76,14 @@ const sagaMiddleware = createSagaMiddleware();
 
 
 //--------REDUCERS----------
-// Used to store movies returned from the server
+// stores movie info returned from the server
 const movieInfo = (state= {}, action) => {
     if (action.type === 'SEE_MOVIE'){
         return action.payload;
     }
     return state;
 }
+// stores genres of selected movie
 const movieGenres = (state=[], action) => {
     switch (action.type) {
         case 'MOVIE_GENRES':
@@ -89,6 +92,7 @@ const movieGenres = (state=[], action) => {
             return state;
     }    
 }
+// stores all movies 
 const movies = (state = [], action) => {
     switch (action.type) {
         case 'SET_MOVIES':
@@ -97,7 +101,7 @@ const movies = (state = [], action) => {
             return state;
     }
 }
-// Used to store the movie genres
+// stores all genres
 const genres = (state = [], action) => {
     switch (action.type) {
         case 'SET_GENRES':

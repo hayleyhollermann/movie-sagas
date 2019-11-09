@@ -11,7 +11,8 @@ const mapReduxStateToProps = reduxState => ({
 class Edit extends Component {
 
   state = {
-    movie: this.props.reduxState.movieInfo
+    movieGenres: this.props.reduxState.movieGenres,
+    movie: this.props.reduxState.movieInfo,
   }
 
   componentDidMount() {
@@ -26,6 +27,7 @@ class Edit extends Component {
   editDescription = (event) => {
     console.log('in editDescription');
     this.setState({
+      ...this.state,
       movie:{
         ...this.state.movie,
         description: event.target.value
@@ -43,15 +45,12 @@ class Edit extends Component {
       <div>
         <h2>Edit Info for {this.props.reduxState.movieInfo.title}</h2>
         <input placeholder="description" value={this.state.movie.description} onChange={this.editDescription}/>
-        <button onClick={this.saveDescription}>Save Changes</button>
         <pre>{JSON.stringify(this.state.movie)}</pre>
         <p>Genres:</p>
-        <ul>
           {this.props.reduxState.movieGenres.map((genre) => 
           <GenreListItem genre={genre} key={genre.id}/>
           )}
-        </ul>
-        <button>Save</button>
+        <button onClick={this.saveDescription}>Save Changes</button>
         <button>Cancel</button>
         <pre>{JSON.stringify(this.props.reduxState.genres)}</pre>
         <pre>{JSON.stringify(this.props.reduxState.movieInfo)}</pre>
