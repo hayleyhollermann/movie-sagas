@@ -6,6 +6,7 @@ import './App.css';
 import MoviesList from '../MoviesList/MoviesList';
 import MovieDescription from '../MovieDescription/MovieDescription';
 import Edit from '../Edit/Edit';
+import Header from '../Header/Header';
 
 class App extends Component {
   // Renders the entire app on the DOM
@@ -14,7 +15,7 @@ class App extends Component {
     return (
       <Router>
       <div className="App">
-        <h1>GitFlix</h1>
+        <Header />
         <Route exact path="/" component={MoviesList}/>
         <Route path="/movie-description" component={MovieDescription}/>
         <Route path="/edit" component={Edit} />

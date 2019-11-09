@@ -3,9 +3,18 @@
 }
 
 body {
-  background-image: url(gravel.png);
-  /* background-size: cover; */
+  background-image: url(what-the-hex.png);
   background-repeat: inherit;
+}
+
+.AppHeader {
+  background-image: url(what-the-hex-dark.png);
+  height: 70px;
+  padding: 20px;
+  padding-bottom: 40px;
+  color: white;
+  font-family: monospace;
+  font-size: xx-large;
 }
 
 .AllMovies{
