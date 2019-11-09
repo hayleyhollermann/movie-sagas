@@ -10,14 +10,20 @@ class GenreListItem extends Component {
 
   state = {
     edit:{
-        genres: false,
-    }
+      genres: false,
+    },
+    newId: '',
   }
 
   dropdownGenres = () => {
     this.setState({
         edit:{genres: !this.state.edit.genres}
     })
+  }
+
+  setNewGenre = () => {
+      console.log('in setNewGenre');
+      
   }
 
   render() {
@@ -30,7 +36,7 @@ class GenreListItem extends Component {
           </li>) : 
           <select>
             {this.props.reduxState.genres.map((genreItem) => 
-              <option key={genreItem.id}>{genreItem.name}</option>
+              <option key={genreItem.id} onClick={() => this.setNewGenre(genreItem.id)}>{genreItem.name}</option>
             )}
           </select>
         }
