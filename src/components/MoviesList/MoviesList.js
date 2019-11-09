@@ -25,9 +25,9 @@ class MoviesList extends Component {
       <div className="AllMovies">
         <h2>Git Flix</h2>
         {/* map through movies array */}
-        {this.props.reduxState.movies.map((movie) => {
-            return <MovieItem movie={movie} key={movie.id}/>
-        })}
+        {this.props.reduxState.movies.map((movie) => 
+            <div key={movie.id}><MovieItem movie={movie} key={movie.id}/></div>
+        )}
         <pre>{JSON.stringify(this.props.reduxState.movies)}</pre>
       </div>
     );

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import { withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 const mapReduxStateToProps = reduxState => ({
     reduxState,
@@ -8,9 +8,15 @@ const mapReduxStateToProps = reduxState => ({
 
 class MoviesItem extends Component {
 
+  getInfo = (movie) => {
+    console.log(movie.title);
+    this.props.dispatch({type: 'SEE_INFO', payload: movie});
+    this.props.history.push(`/movie-description`)
+  }
+
   render() {
     return (
-      <div className="MovieItem">
+      <div key={this.props.movie.id} className="MovieItem" onClick={()=>this.getInfo(this.props.movie)}>
           <img src={this.props.movie.poster} alt={this.props.movie.title}/>
           <p>{this.props.movie.title}</p>
       </div>
@@ -19,4 +25,4 @@ class MoviesItem extends Component {
 }
 
 
-export default connect(mapReduxStateToProps)(MoviesItem);
+export default connect(mapReduxStateToProps)(withRouter(MoviesItem));
