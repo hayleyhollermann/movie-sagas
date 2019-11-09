@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  font-family: monospace;
 }
 
 body {
@@ -13,7 +14,6 @@ body {
   padding: 20px;
   padding-bottom: 40px;
   color: white;
-  font-family: monospace;
   font-size: xx-large;
 }
 
