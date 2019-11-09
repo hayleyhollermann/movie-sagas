@@ -13,15 +13,29 @@ router.get('/', (req, res) => {
 })
 
 router.get('/details/:id', (req, res) => {
-    const queryText = `SELECT * FROM "movies"
-    LEFT OUTER JOIN "movie_genre" ON "movie_genre"."movie_id"="movies"."id"
-    LEFT OUTER JOIN "genres" ON "genres"."id"="movie_genre"."genre_id"
-    WHERE "movies"."id" = $1;`;
-    console.log(req.params.id);
+    const queryText = `SELECT * FROM "movies" WHERE "movies"."id" = $1;`;
     pool.query(queryText, [req.params.id])
-      .then((result) => { res.send(result.rows); })
+      .then((result) => { 
+        console.log(result);
+          
+        res.send(result.rows[0]); })
       .catch((err) => {
         console.log('Error completing movie info query', err);
+        res.sendStatus(500);
+      });
+})
+
+router.get('/genres/:id', (req, res) => {
+    const queryText = `SELECT "genres"."name" FROM "genres"
+    JOIN "movie_genre" ON "genres"."id"="movie_genre"."genre_id"
+    JOIN "movies" ON "movie_genre"."movie_id"="movies"."id"
+    WHERE "movies"."id"=$1;`;
+    pool.query(queryText, [req.params.id])
+      .then((result) => { 
+        console.log(result);
+        res.send(result.rows); })
+      .catch((err) => {
+        console.log('Error completing movie genre query', err);
         res.sendStatus(500);
       });
 })
