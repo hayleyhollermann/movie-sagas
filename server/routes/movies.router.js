@@ -58,7 +58,7 @@ router.get('/genres/:id', (req, res) => {
 router.put('/details/:id', (req, res) => {
     const queryText = `UPDATE "movies" SET "description" = $1
     WHERE "id" = $2;`;
-    pool.query(queryText, [req.body, req.params.id])
+    pool.query(queryText, [req.body.description, req.params.id])
       .then(() => {
         res.sendStatus(200); })
       .catch((err) => {
