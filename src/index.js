@@ -16,6 +16,7 @@ import axios from 'axios';
 // Create the rootSaga generator function
 function* rootSaga() {
     yield takeEvery('GET_MOVIES', getMoviesSaga);
+    yield takeEvery('SEE_INFO', seeInfoSaga);
 }
 
 //--------SAGAS-------------
@@ -27,6 +28,14 @@ function* getMoviesSaga() {
         console.log('error fetching movies list', error)
     }    
 }
+function* seeInfoSaga(action) {
+    try {
+        const moviesResponse = yield axios.get(`/movies/details/${action.payload}`);
+        yield put ({ type: 'SEE_MOVIE', payload: moviesResponse.data})
+    } catch(error) {
+        console.log('error fetching movies list', error)
+    }
+}
 //--------END SAGAS---------
 
 
@@ -37,7 +46,7 @@ const sagaMiddleware = createSagaMiddleware();
 //--------REDUCERS----------
 // Used to store movies returned from the server
 const movieInfo = (state= {}, action) => {
-    if (action.type === 'SEE_INFO'){
+    if (action.type === 'SEE_MOVIE'){
         return action.payload;
     }
     return state;

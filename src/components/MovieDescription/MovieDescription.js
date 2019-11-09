@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 const mapReduxStateToProps = reduxState => ({
-    reduxState,
+    reduxState
 });
 
 class MovieDescription extends Component {
