@@ -6,7 +6,7 @@ const mapReduxStateToProps = reduxState => ({
     reduxState
 });
 
-class Edit extends Component {
+class GenreListItem extends Component {
 
   state = {
     edit:{
@@ -28,7 +28,11 @@ class Edit extends Component {
             <button onClick={this.dropdownGenres}>Edit</button>
             <button>Delete</button>
           </li>) : 
-            <p>hello</p>
+          <select>
+            {this.props.reduxState.genres.map((genreItem) => 
+              <option key={genreItem.id}>{genreItem.name}</option>
+            )}
+          </select>
         }
       </div>
     );
@@ -36,4 +40,4 @@ class Edit extends Component {
 }
 
 
-export default connect(mapReduxStateToProps)(withRouter(Edit));
+export default connect(mapReduxStateToProps)(withRouter(GenreListItem));
