@@ -2,15 +2,19 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import { withRouter } from 'react-router-dom';
 
+import MovieItem from '../MovieItem/MovieItem';
+
 const mapReduxStateToProps = reduxState => ({
     reduxState,
 });
 
 class MoviesList extends Component {
+
   componentDidMount() {
     this.getMovies();
   }
 
+  // dispatches to getMoviesSaga
   getMovies = () => {
       console.log('in getMovies');
       this.props.dispatch({type: 'GET_MOVIES'})
@@ -18,8 +22,13 @@ class MoviesList extends Component {
 
   render() {
     return (
-      <div className="App">
-        <p>Empty Page</p>
+      <div className="AllMovies">
+        <h2>Git Flix</h2>
+        {/* map through movies array */}
+        {this.props.reduxState.movies.map((movie) => {
+            return <MovieItem movie={movie} key={movie.id}/>
+        })}
+        <pre>{JSON.stringify(this.props.reduxState.movies)}</pre>
       </div>
     );
   }
