@@ -23,7 +23,6 @@ class MoviesList extends Component {
   render() {
     return (
       <div className="AllMovies">
-        <h2>Git Flix</h2>
         {/* map through movies array */}
         {this.props.reduxState.movies.map((movie) => 
             <div key={movie.id}><MovieItem movie={movie} key={movie.id}/></div>

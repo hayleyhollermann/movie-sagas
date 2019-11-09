@@ -12,6 +12,7 @@ class App extends Component {
     return (
       <Router>
       <div className="App">
+        <h1>GitFlix</h1>
         <Route exact path="/" component={MoviesList}/>
         <Route path="/movie-description" component={MovieDescription}/>
       </div>
