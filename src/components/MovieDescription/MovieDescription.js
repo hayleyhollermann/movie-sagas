@@ -13,12 +13,14 @@ class MovieDescription extends Component {
   render() {
     return (
       <div>
-          <h3>{this.props.reduxState.movieInfo.title}</h3>
+          <h2>{this.props.reduxState.movieInfo.title}</h2>
+          {this.props.reduxState.genres.map((genre) => 
+            <p key={genre.name}>{genre.name}</p>)}
           <img src={this.props.reduxState.movieInfo.poster} alt={this.props.reduxState.movieInfo.title}/>
           <p>{this.props.reduxState.movieInfo.description}</p>
           {/* <p>{this.props.reduxState}</p> */}
 
-          <pre>{JSON.stringify(this.props.reduxState.movieInfo)}</pre>
+          <pre>{JSON.stringify(this.props.reduxState.genres)}</pre>
       </div>
     );
   }

@@ -11,6 +11,7 @@ class MoviesItem extends Component {
   getInfo = (movie) => {
     console.log(movie.title);
     this.props.dispatch({type: 'SEE_INFO', payload: movie.id});
+    this.props.dispatch({type: 'GET_GENRES', payload: movie.id})
     this.props.history.push(`/movie-description`)
   }
 
