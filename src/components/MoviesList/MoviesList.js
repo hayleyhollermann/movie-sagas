@@ -22,6 +22,7 @@ class MoviesList extends Component {
 
   render() {
     return (
+
       <div className="AllMovies">
         {/* map through movies array */}
         {this.props.reduxState.movies.map((movie) => 
