@@ -3,8 +3,9 @@ const router = express.Router();
 const pool = require('../modules/pool');
 
 // ------- GET's -------------
+// GET all movies
 router.get('/', (req, res) => {
-    const queryText = `SELECT "movies"."title", "movies"."id", "movies"."poster", "movies"."description" FROM "movies";`;
+    const queryText = `SELECT * FROM "movies" ORDER BY "title";`;
     pool.query(queryText)
       .then((result) => { res.send(result.rows); })
       .catch((err) => {
@@ -24,9 +25,22 @@ router.get('/details/:id', (req, res) => {
         res.sendStatus(500);
       });
 })
+// GET all genres list
+router.get('/genres/', (req, res) => {
+    const queryText = `SELECT * FROM "genres" ORDER BY "name"`;
+    pool.query(queryText)
+      .then((result) => { 
+        console.log(result);
+        res.send(result.rows); })
+      .catch((err) => {
+        console.log('Error completing movie genre query', err);
+        res.sendStatus(500);
+      });
+})
 // GET genres for selected movie
 router.get('/genres/:id', (req, res) => {
-    const queryText = `SELECT "genres"."name" FROM "genres"
+    // selects, genre name, id and genre_id in movie_genre table,
+    const queryText = `SELECT "genres"."name", "movie_genre"."id", "movie_genre"."genre_id" FROM "genres"
     JOIN "movie_genre" ON "genres"."id"="movie_genre"."genre_id"
     JOIN "movies" ON "movie_genre"."movie_id"="movies"."id"
     WHERE "movies"."id"=$1;`;

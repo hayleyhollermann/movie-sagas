@@ -18,6 +18,7 @@ function* rootSaga() {
     yield takeEvery('GET_MOVIES', getMoviesSaga);
     yield takeEvery('SEE_INFO', seeInfoSaga);
     yield takeEvery('GET_GENRES', getGenresSaga);
+    yield takeEvery('ALL_GENRES', allGenresSaga);
 }
 
 //--------SAGAS-------------
@@ -40,10 +41,19 @@ function* seeInfoSaga(action) {
 function* getGenresSaga(action) {
     try {
         const moviesResponse = yield axios.get(`/movies/genres/${action.payload}`);
+        yield put ({ type: 'MOVIE_GENRES', payload: moviesResponse.data})
+    } catch(error) {
+        console.log('error fetching movie genres list', error)
+    }
+}
+function* allGenresSaga() {
+    try {
+        const moviesResponse = yield axios.get('/movies/genres');
+        console.log('in allGenresSaga', moviesResponse.data);
         yield put ({ type: 'SET_GENRES', payload: moviesResponse.data})
     } catch(error) {
-        console.log('error fetching movies list', error)
-    }
+        console.log('error fetching genres list', error)
+    } 
 }
 //--------END SAGAS---------
 
@@ -60,7 +70,14 @@ const movieInfo = (state= {}, action) => {
     }
     return state;
 }
-
+const movieGenres = (state=[], action) => {
+    switch (action.type) {
+        case 'MOVIE_GENRES':
+            return action.payload;
+        default:
+            return state;
+    }    
+}
 const movies = (state = [], action) => {
     switch (action.type) {
         case 'SET_MOVIES':
@@ -87,6 +104,7 @@ const storeInstance = createStore(
         movies,
         genres,
         movieInfo,
+        movieGenres,
     }),
     // Add sagaMiddleware to our store
     applyMiddleware(sagaMiddleware, logger),
