@@ -110,6 +110,14 @@ const genres = (state = [], action) => {
             return state;
     }
 }
+// tracks changes to genre list
+const genreChanges = (state = [], action) => {
+    if (action.type === 'SET_NEW_GENRE'){
+        return [...state, action.payload] 
+    }
+    // add reducer to clear state
+    return state
+}
 //--------END REDUCERS---------
 
 
@@ -120,6 +128,7 @@ const storeInstance = createStore(
         genres,
         movieInfo,
         movieGenres,
+        genreChanges,
     }),
     // Add sagaMiddleware to our store
     applyMiddleware(sagaMiddleware, logger),
