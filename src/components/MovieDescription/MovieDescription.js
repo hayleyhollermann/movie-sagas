@@ -23,11 +23,11 @@ class MovieDescription extends Component {
     return (
       <div class ="MovieDescription">
           <Button onClick={this.backToList}><ArrowBackRoundedIcon fontSize="large" /></Button>
-          <h2>{this.props.reduxState.movieInfo.title}</h2>
+          <h1>{this.props.reduxState.movieInfo.title}</h1>
           <img src={this.props.reduxState.movieInfo.poster} alt={this.props.reduxState.movieInfo.title}/> < br/>
           {this.props.reduxState.movieGenres.map((genre) => 
             <span class="genreSpan" key={genre.name}>{genre.name}</span>)}
-          <p>{this.props.reduxState.movieInfo.description}</p>
+            <p>{this.props.reduxState.movieInfo.description}</p>
           <Button onClick={() => this.editInfoPage(this.props.reduxState.movieInfo)}>Edit Info</Button>
           <pre>{JSON.stringify(this.props.reduxState.movieGenres)}</pre>
       </div>

@@ -34,8 +34,15 @@ body {
 
 .MovieDescription{
   text-align: center;
-  width: 70%;
-  padding-left: 15%;
+  margin-left: 15%;
+  margin-right: 15%;
+  margin-top: 5%;
+  padding-top: 2%;
+  padding-left: 5%;
+  padding-right: 5%;
+  background-color: whitesmoke;
+  box-shadow: 7px 10px 5px #222;
+  border-radius: 10px;
 }
 
 .genreSpan{
@@ -43,3 +50,4 @@ body {
   padding-right: 5px;
   font-size: large;
 }
+
