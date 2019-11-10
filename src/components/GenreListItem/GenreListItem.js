@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { Button } from '@material-ui/core';
+
 
 const mapReduxStateToProps = reduxState => ({
     reduxState
@@ -37,8 +39,8 @@ class GenreListItem extends Component {
       <div>
         {!this.state.edit.genres ? 
           (<li key={this.props.genre.id}>{this.props.genre.name}, id:{this.props.genre.id}
-            <button onClick={this.dropdownGenres}>Edit</button>
-            <button>Delete</button>
+            <Button size="small" onClick={this.dropdownGenres}>Edit</Button>
+            <Button size="small">Delete</Button>
           </li>) : 
           <select onChange={this.setNewGenre}>
             {this.props.reduxState.genres.map((genreItem) => 

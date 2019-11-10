@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import GenreListItem from '../GenreListItem/GenreListItem';
+import { TextField, Button } from '@material-ui/core';
+
 
 
 const mapReduxStateToProps = reduxState => ({
@@ -42,16 +44,16 @@ class Edit extends Component {
 
   render() {
     return (
-      <div>
+      <div className="MovieDescription">
         <h2>Edit Info for {this.props.reduxState.movieInfo.title}</h2>
-        <input placeholder="description" value={this.state.movie.description} onChange={this.editDescription}/>
+        <TextField placeholder="description" multiline="true" fullWidth='true' value={this.state.movie.description} onChange={this.editDescription}/>
         <pre>{JSON.stringify(this.state.movie)}</pre>
         <p>Genres:</p>
           {this.props.reduxState.movieGenres.map((genre) => 
           <GenreListItem genre={genre} key={genre.id}/>
           )}
-        <button onClick={this.saveDescription}>Save Changes</button>
-        <button>Cancel</button>
+        <Button onClick={this.saveDescription}>Save Changes</Button>
+        <Button>Cancel</Button>
         <pre>{JSON.stringify(this.props.reduxState.genres)}</pre>
         <pre>{JSON.stringify(this.props.reduxState.movieInfo)}</pre>
       </div>
