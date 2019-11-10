@@ -14,7 +14,10 @@ class GenreListItem extends Component {
     edit:{
       genres: false,
     },
-    newId: '',
+    genreToChange: {
+        name: this.props.genre.name,
+        movieGenreId: this.props.genre.id
+    }
   }
 
   dropdownGenres = () => {
@@ -25,10 +28,11 @@ class GenreListItem extends Component {
   }
 
   setNewGenre = (event) => {
-    console.log('in setNewGenre');
+    console.log('in setNewGenre', event.target.value);
     this.setState({
         ...this.state,
-        newId: event.data
+        genreToChange: event.target.value,
+        edit: {genres: false}
     })
     console.log('new genre id =', this.state.newId);
     
@@ -38,17 +42,20 @@ class GenreListItem extends Component {
     return (
       <div>
         {!this.state.edit.genres ? 
-          (<li key={this.props.genre.id}>{this.props.genre.name}, id:{this.props.genre.id}
+          (<li key={this.props.genre.id}>{this.state.newGenre}, id:{this.props.genre.id}
             <Button size="small" onClick={this.dropdownGenres}>Edit</Button>
             <Button size="small">Delete</Button>
           </li>) : 
           <select onChange={this.setNewGenre}>
+            <option> </option>
             {this.props.reduxState.genres.map((genreItem) => 
-              <option data={genreItem.id} key={genreItem.id}>{genreItem.name} : {genreItem.id}</option>
+              <option key={genreItem.id}>{genreItem.name}</option>
             )}
           </select>
         }
-        <pre>{JSON.stringify(this.props.reduxState.genres)}</pre>
+        {/* <pre>{JSON.stringify(this.props.reduxState.genres)}</pre> */}
+        <pre>{JSON.stringify(this.props.genre)}</pre>
+        <pre>{JSON.stringify(this.props.reduxState.movieGenres, null, 0)}</pre>
       </div>
     );
   }
