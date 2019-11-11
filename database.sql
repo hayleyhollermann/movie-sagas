@@ -55,3 +55,55 @@ VALUES
 ('Science Fiction'),
 ('Space-Opera'),
 ('Superhero');
+
+
+CREATE TABLE "movie_genre" (
+  "id" SERIAL PRIMARY KEY,
+  "movie_id" INT REFERENCES "movies",
+  "genre_id" INT REFERENCES "genres"
+);
+
+INSERT INTO "movie_genre" ("movie_id", "genre_id")
+VALUES ('1', '11'), ('1', '7'), ('2', '10'), ('2', '9'), ('2', '8'), ('3', '13'), ('4', '2'), ('4', '1'), ('6', '8'), ('8', '6'), ('9', '2'), ('9', '4'), ('10', '12'), ('10', '7'), ('11', '11'), ('12', '3'), ('12', '6'), ('13', '7'), ('13', '10'), ('13', '5'), ('14', '2'), ('14', '1'), ('14', '4');
+
+SELECT "movies"."title", "movies"."poster", "movies"."description", "genres"."name" FROM "movies"
+LEFT OUTER JOIN "movie_genre" ON "movie_genre"."movie_id"="movies"."id"
+LEFT OUTER JOIN "genres" ON "genres"."id"="movie_genre"."genre_id";
+
+SELECT "movies"."title", "movies"."poster", "movies"."description" FROM "movies";
+
+SELECT * FROM "movies";
+WHERE "id" = 4 LIMIT 1;
+
+SELECT "movies"."title", "movies"."poster", "movies"."description", "genres"."name" FROM "movies"
+LEFT OUTER JOIN "movie_genre" ON "movie_genre"."movie_id"="movies"."id"
+LEFT OUTER JOIN "genres" ON "genres"."id"="movie_genre"."genre_id"
+WHERE "movies"."id"=4;
+
+SELECT "genres"."name" FROM "genres"
+JOIN "movie_genre" ON "genres"."id"="movie_genre"."genre_id"
+JOIN "movies" ON "movie_genre"."movie_id"="movies"."id"
+WHERE "movies"."id"=2;
+
+UPDATE "movies" SET "description" = 'Im Blue'
+WHERE "id" = 1;
+
+UPDATE "movie_genre" SET "genre_id" = 4 
+WHERE "id"=1;
+
+SELECT * FROM "genres";
+
+SELECT "genres"."name", "movie_genre"."id", "movie_genre"."genre_id" FROM "genres"
+    JOIN "movie_genre" ON "genres"."id"="movie_genre"."genre_id"
+    JOIN "movies" ON "movie_genre"."movie_id"="movies"."id"
+    WHERE "movies"."id"=2;
+    
+    
+UPDATE "movie_genre" SET "genres"."name" =  
+JOIN "genres" ON 
+WHERE "id"=1;
+
+SELECT "genres"."id" FROM "genres"
+WHERE "genres"."name"='Epic';
+
+UPDATE "movie_genres" SET "movie_genres"."genre_id" 
