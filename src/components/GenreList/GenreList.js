@@ -12,6 +12,7 @@ const mapReduxStateToProps = reduxState => ({
 class GenreList extends Component {
 
   cancelChanges = () => {
+    this.props.dispatch({type: 'CLEAR_EDIT_GENRES'})
     this.props.history.push('/')
   }
 
@@ -19,7 +20,6 @@ class GenreList extends Component {
     console.log('in saveChanges');
     this.props.dispatch({type: 'EDIT_DETAILS', payload: this.props.movie})
     this.props.dispatch({type:'EDIT_GENRES', payload: this.props.reduxState.genreChanges})
-    // this.props.dispatch({type: 'EDIT_TITLE', payload: this.props.movie})
     this.props.history.push('/')
   } 
 

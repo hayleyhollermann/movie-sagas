@@ -19,7 +19,6 @@ function* rootSaga() {
     yield takeEvery('ALL_GENRES', allGenresSaga);
     yield takeEvery('EDIT_DETAILS', editDetailsSaga);
     yield takeEvery('EDIT_GENRES', editGenresSaga);
-    // yield takeEvery('EDIT_TITLE', editTitleSaga);
 }
 
 //--------SAGAS-------------
@@ -38,7 +37,7 @@ function* seeInfoSaga(action) {
         const moviesResponse = yield axios.get(`/movies/details/${action.payload}`);
         yield put ({ type: 'SEE_MOVIE', payload: moviesResponse.data})
     } catch(error) {
-        console.log('error fetching movies list', error)
+        console.log('error fetching movies info', error)
     }
 }
 // gets all genres of selected movie
@@ -57,7 +56,7 @@ function* allGenresSaga() {
         console.log('in allGenresSaga', moviesResponse.data);
         yield put ({ type: 'SET_GENRES', payload: moviesResponse.data})
     } catch(error) {
-        console.log('error fetching genres list', error)
+        console.log('error fetching all genres list', error)
     } 
 }
 // sends new description and title to server 
@@ -70,6 +69,7 @@ function* editDetailsSaga(action) {
          console.log('error in editDescriptionSaga', error)
     }
 }
+// sends info for genre changes to server
 function* editGenresSaga(action) {
     console.log('in editGenresSaga');
     try {
@@ -126,7 +126,9 @@ const genreChanges = (state = [], action) => {
     if (action.type === 'SET_NEW_GENRE'){
         return [...state, action.payload] 
     }
-    // add reducer to clear state
+    if (action.type === 'CLEAR_EDIT_GENRES'){
+        return []
+    }
     return state
 }
 //--------END REDUCERS---------

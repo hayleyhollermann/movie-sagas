@@ -45,7 +45,7 @@ class GenreList extends Component {
     return (
       <div>
         {!this.state.edit.genres ? 
-          (<li key={this.props.genre.id}>{this.state.genreToChange.name}, id:{this.props.genre.id}
+          (<li key={this.props.genre.id}><h3>{this.state.genreToChange.name}</h3>
             <Button size="small" onClick={this.dropdownGenres}>Edit</Button>
             <Button size="small">Delete</Button>
           </li>) : 
