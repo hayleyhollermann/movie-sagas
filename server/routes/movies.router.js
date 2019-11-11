@@ -95,20 +95,23 @@ router.put('/genres/', (req, res) => {
 
 // --------POST's---------
 // add POST query req to add new genre
-router.post('/movies/genres', (req, res) => {
-    console.log('in post query');
-    
+router.post('/genres', (req, res) => {
+    console.log('in post query', req.body);
     const genreIdQuery = `SELECT "genres"."id" FROM "genres" WHERE "genres"."name"=$1;`;
     pool.query(genreIdQuery, [req.body.genre])
       .then((result) =>{
+        console.log(result);
         const queryText = `INSERT INTO "movie_genre" ("movie_id", "genre_id")
         VALUES ($1, $2);`;
-        pool.query(queryText, [req.body.movie, result.rows[0]])
+        pool.query(queryText, [req.body.movie.id, result.rows[0].id])
       })
       .catch((error) => {
         console.log('error in post query to add new genre', error);
         res.sendStatus(500)
       })
+    .catch((error) => {
+        console.log('error in post. error with selecting genre id', error);
+    })
 })
 
-module.exports = router;
+module.exports = router; 

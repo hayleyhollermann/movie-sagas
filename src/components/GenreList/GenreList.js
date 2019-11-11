@@ -22,14 +22,11 @@ class GenreList extends Component {
   newGenreInput = (event) => {
     this.setState({
       ...this.state,
-      ...this.state.addGenre,
-      genre: event.target.value
+      movieInfo: {
+        ...this.state.movieInfo,
+        genre: event.target.value
+      }
     })
-  }
-
-  addGenre = () => {
-    console.log('in addGenre');
-    this.toggleAddGenre();
   }
 
   // once button is clicked, conditional rendering
@@ -70,14 +67,12 @@ class GenreList extends Component {
                 {this.props.reduxState.genres.map((genreItem) => 
                   <option key={genreItem.id}>{genreItem.name}</option>
                 )}
-              </select>
-              <Button onClick={this.addGenre}>Add</Button></>
+              </select></>
               : <Button onClick={this.toggleAddGenre}>Add a New Genre</Button>
             }
           </li>
-          {/* <li>
-          </li> */}
         </ul>
+        <pre>{JSON.stringify(this.state)}</pre>
         <Button onClick={this.saveChanges}>Save Changes</Button>
         <Button onClick={this.cancelChanges}>Cancel</Button>
       </div>

@@ -83,7 +83,7 @@ function* editDetailsSaga(action) {
 function* editGenresSaga(action) {
     console.log('in editGenresSaga');
     try {
-        yield axios.put(`/movies/genres/`, action.payload);
+        yield axios.put(`/movies/genres`, action.payload);
         yield put({type: 'SEE_INFO', payload: action.payload.id});
     } catch(error) {
          console.log('error in editGenresSaga', error)
