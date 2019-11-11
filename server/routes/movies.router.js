@@ -65,16 +65,37 @@ router.put('/details/:id', (req, res) => {
         console.log('Error completing change details query', err);
         res.sendStatus(500); })
 })
-router.put('/genres/:id', (req, res) => {
+router.put('/genres/', (req, res) => {
     // target each genre by movie_genre.id
-    const queryText = `UPDATE "movie_genre" SET "genre_id" = $1 
-    WHERE "id"= $2;`;
-    pool.query(queryText, [req.body, req.params.id])
-    .then(() => {
-      res.sendStatus(200); })
-    .catch((err) => {
-      console.log('Error completing change details query', err);
-      res.sendStatus(500); })
+    console.log('in change genre query req');
+    for (change of req.body){
+        const genreIdQuery = `SELECT "genres"."id" FROM "genres" WHERE "genres"."name"=$1;`;
+        pool.query(genreIdQuery, [change.name])
+          .then((result) => {
+              console.log('result in query:', result.rows[0].id);
+              
+            const queryText = `UPDATE "movie_genre" SET "genre_id" = $1 
+            WHERE "id"= $2;`;
+              pool.query(queryText, [result.rows[0].id, change.id])
+              .then(() => {
+                res.sendStatus(200); })
+              .catch((err) => {
+                console.log('Error completing change details query', err);
+                res.sendStatus(500); })
+          }) .catch((error) => {
+              console.log('error in getting id for genre', error);
+              res.sendStatus(500);
+          })
+        
+        // const queryText = `UPDATE "movie_genre" SET "genre_name" = $1 
+        // WHERE "id"= $2;`;
+        // pool.query(queryText, [change.name, change.id])
+        // .then(() => {
+        //   res.sendStatus(200); })
+        // .catch((err) => {
+        //   console.log('Error completing change details query', err);
+        //   res.sendStatus(500); })
+    }
 })
 
 module.exports = router;
