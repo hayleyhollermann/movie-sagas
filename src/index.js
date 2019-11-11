@@ -17,8 +17,9 @@ function* rootSaga() {
     yield takeEvery('SEE_INFO', seeInfoSaga);
     yield takeEvery('GET_GENRES', getGenresSaga);
     yield takeEvery('ALL_GENRES', allGenresSaga);
-    yield takeEvery('EDIT_DESCRIPTION', editDescriptionSaga);
+    yield takeEvery('EDIT_DETAILS', editDetailsSaga);
     yield takeEvery('EDIT_GENRES', editGenresSaga);
+    // yield takeEvery('EDIT_TITLE', editTitleSaga);
 }
 
 //--------SAGAS-------------
@@ -59,12 +60,12 @@ function* allGenresSaga() {
         console.log('error fetching genres list', error)
     } 
 }
-// sends new description to server 
-function* editDescriptionSaga(action) {
-    console.log('in editDescriptionSaga', action.payload.description);
+// sends new description and title to server 
+function* editDetailsSaga(action) {
     try {
         yield axios.put(`/movies/details/${action.payload.id}`, action.payload);
-        yield put({type: 'SEE_INFO', payload: action.payload.id});
+        // yield put({type: 'SEE_INFO', payload: action.payload.id});
+        yield put({type: 'GET_MOVIES'})
     } catch(error) {
          console.log('error in editDescriptionSaga', error)
     }

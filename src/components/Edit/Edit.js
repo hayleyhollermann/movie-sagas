@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import GenreList from '../GenreList/GenreList';
-import { TextField, Button } from '@material-ui/core';
+import { TextField, Input } from '@material-ui/core';
 
 
 
@@ -37,19 +37,23 @@ class Edit extends Component {
     })  
   }
 
-  saveDescription = () => {
-    console.log('in saveDescription');
-    this.props.dispatch({type: 'EDIT_DESCRIPTION', payload: this.state.movie})
-  } 
+  editTitle = (event) => {
+    this.setState({
+        ...this.state,
+        movie:{
+          ...this.state.movie,
+          title: event.target.value
+        }
+      }) 
+  }
 
   render() {
     return (
       <div className="MovieDescription">
-        <h2>Edit Info for {this.props.reduxState.movieInfo.title}</h2>
+        <h1>Edit Info for {this.props.reduxState.movieInfo.title}</h1>
+        <Input placeholder="title" fullWidth={true} value={this.state.movie.title} onChange={this.editTitle}/>
         <TextField placeholder="description" multiline={true} fullWidth={true} value={this.state.movie.description} onChange={this.editDescription}/>
-        <pre>{JSON.stringify(this.state.movie)}</pre>
         <GenreList movie={this.state.movie}/>
-        <pre>{JSON.stringify(this.props.reduxState.movieInfo)}</pre>
       </div>
     );
   }

@@ -55,27 +55,29 @@ router.get('/genres/:id', (req, res) => {
 })
 
 // ------- PUT's ---------
+// update movie description / title
 router.put('/details/:id', (req, res) => {
-    const queryText = `UPDATE "movies" SET "description" = $1
-    WHERE "id" = $2;`;
-    pool.query(queryText, [req.body.description, req.params.id])
+    const queryText = `UPDATE "movies" SET "description" = $1, "title" = $2
+    WHERE "id" = $3;`;
+    pool.query(queryText, [req.body.description, req.body.title, req.params.id])
       .then(() => {
         res.sendStatus(200); })
       .catch((err) => {
         console.log('Error completing change details query', err);
         res.sendStatus(500); })
 })
+// change movie genres
 router.put('/genres/', (req, res) => {
-    // target each genre by movie_genre.id
     console.log('in change genre query req');
+    // loop through array of genre changes
     for (change of req.body){
         const genreIdQuery = `SELECT "genres"."id" FROM "genres" WHERE "genres"."name"=$1;`;
+        // query to retrieve genre id by genre name
         pool.query(genreIdQuery, [change.name])
           .then((result) => {
-              console.log('result in query:', result.rows[0].id);
-              
             const queryText = `UPDATE "movie_genre" SET "genre_id" = $1 
             WHERE "id"= $2;`;
+              // implements genre change
               pool.query(queryText, [result.rows[0].id, change.id])
               .then(() => {
                 res.sendStatus(200); })
@@ -86,15 +88,6 @@ router.put('/genres/', (req, res) => {
               console.log('error in getting id for genre', error);
               res.sendStatus(500);
           })
-        
-        // const queryText = `UPDATE "movie_genre" SET "genre_name" = $1 
-        // WHERE "id"= $2;`;
-        // pool.query(queryText, [change.name, change.id])
-        // .then(() => {
-        //   res.sendStatus(200); })
-        // .catch((err) => {
-        //   console.log('Error completing change details query', err);
-        //   res.sendStatus(500); })
     }
 })
 

@@ -29,7 +29,6 @@ class MovieDescription extends Component {
             <span className="genreSpan" key={genre.name}>{genre.name}</span>)}
             <p>{this.props.reduxState.movieInfo.description}</p>
           <Button onClick={() => this.editInfoPage(this.props.reduxState.movieInfo)}>Edit Info</Button>
-          <pre>{JSON.stringify(this.props.reduxState.movieGenres)}</pre>
       </div>
     );
   }

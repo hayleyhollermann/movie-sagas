@@ -56,7 +56,6 @@ class GenreList extends Component {
             )}
           </select>
         }
-        <pre>{JSON.stringify(this.state)}</pre>
       </div>
     );
   }
