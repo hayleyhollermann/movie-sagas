@@ -53,6 +53,7 @@ router.get('/genres/:id', (req, res) => {
         res.sendStatus(500);
       });
 })
+// -------END GET's--------
 
 // ------- PUT's ---------
 // update movie description / title
@@ -90,5 +91,12 @@ router.put('/genres/', (req, res) => {
           })
     }
 })
+// -------- END PUT's---------
+
+
+
+// --------POST's---------
+// add POST query req to add new genre
+
 
 module.exports = router;

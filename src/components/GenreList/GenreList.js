@@ -11,16 +11,48 @@ const mapReduxStateToProps = reduxState => ({
 
 class GenreList extends Component {
 
+  state = {
+    addGenre: false,
+    movieInfo: {
+      movie: this.props.movie,
+      genre: ''
+    }
+  }
+
+  newGenreInput = (event) => {
+    this.setState({
+      ...this.state,
+      ...this.state.addGenre,
+      genre: event.target.value
+    })
+  }
+
+  addGenre = () => {
+    console.log('in addGenre');
+    this.toggleAddGenre();
+  }
+
+  // once button is clicked, conditional rendering
+  toggleAddGenre = () => {
+    console.log('in beginAddGenre');
+    this.setState({
+      ...this.state,
+      addGenre: !this.state.addGenre
+    })
+  }
+
   cancelChanges = () => {
     this.props.dispatch({type: 'CLEAR_EDIT_GENRES'})
     this.props.history.push('/')
   }
-
+  
+  // saves changes, sends updates to redux sagas
   saveChanges = () => {
     console.log('in saveChanges');
-    this.props.dispatch({type: 'EDIT_DETAILS', payload: this.props.movie})
-    this.props.dispatch({type:'EDIT_GENRES', payload: this.props.reduxState.genreChanges})
-    this.props.history.push('/')
+    this.props.dispatch({type: 'EDIT_DETAILS', payload: this.props.movie});
+    this.props.dispatch({type:'EDIT_GENRES', payload: this.props.reduxState.genreChanges});
+    this.props.dispatch({type:'ADD_GENRE', payload: this.state.movieInfo});
+    this.props.history.push('/');
   } 
 
   render() {
@@ -31,6 +63,20 @@ class GenreList extends Component {
           {this.props.reduxState.movieGenres.map((genre) => 
             <GenreListItem genre={genre} key={genre.id}/>
           )}
+          <li>
+            {this.state.addGenre ?
+              <><select onChange={this.newGenreInput}>
+                <option> </option>
+                {this.props.reduxState.genres.map((genreItem) => 
+                  <option key={genreItem.id}>{genreItem.name}</option>
+                )}
+              </select>
+              <Button onClick={this.addGenre}>Add</Button></>
+              : <Button onClick={this.toggleAddGenre}>Add a New Genre</Button>
+            }
+          </li>
+          {/* <li>
+          </li> */}
         </ul>
         <Button onClick={this.saveChanges}>Save Changes</Button>
         <Button onClick={this.cancelChanges}>Cancel</Button>

@@ -19,6 +19,7 @@ function* rootSaga() {
     yield takeEvery('ALL_GENRES', allGenresSaga);
     yield takeEvery('EDIT_DETAILS', editDetailsSaga);
     yield takeEvery('EDIT_GENRES', editGenresSaga);
+    yield takeEvery('ADD_GENRE', addGenreSaga);
 }
 
 //--------SAGAS-------------
@@ -59,11 +60,20 @@ function* allGenresSaga() {
         console.log('error fetching all genres list', error)
     } 
 }
+// adds new genre to a movie
+function* addGenreSaga(action) {
+    try {
+        console.log('in addGenreSaga');
+        yield axios.post(`/movies/genres`, action.payload);
+    } catch(error) {
+        console.log('error in addGenreSaga');
+        
+    }
+}
 // sends new description and title to server 
 function* editDetailsSaga(action) {
     try {
         yield axios.put(`/movies/details/${action.payload.id}`, action.payload);
-        // yield put({type: 'SEE_INFO', payload: action.payload.id});
         yield put({type: 'GET_MOVIES'})
     } catch(error) {
          console.log('error in editDescriptionSaga', error)
