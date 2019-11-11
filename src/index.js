@@ -143,7 +143,6 @@ const storeInstance = createStore(
         movieGenres,
         genreChanges,
     }),
-    // Add sagaMiddleware to our store
     applyMiddleware(sagaMiddleware, logger),
 );
 
